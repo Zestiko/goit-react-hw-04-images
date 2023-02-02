@@ -33,11 +33,11 @@ export const App = () => {
 
   useEffect(() => {
     if (firsRender.current) {
-      console.log(firsRender.current);
+      console.log(gallary);
       firsRender.current = false;
       return;
     }
-    console.log('second render ', firsRender.current);
+    console.log('second render ', gallary);
     handelFetch(search);
   }, [search, page]);
 
