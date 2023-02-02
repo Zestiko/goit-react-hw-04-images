@@ -11,7 +11,7 @@ export const ImageGallery = ({ images }) => {
           return (
             <ImageGalleryItem
               smallImage={webformatURL}
-              key={id}
+              key={webformatURL}
               altPhotos={tags}
               lagImage={largeImageURL}
             />

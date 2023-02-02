@@ -32,31 +32,29 @@ export const App = () => {
   };
 
   useEffect(() => {
-    if (firsRender.current) {
-      console.log(gallary);
-      firsRender.current = false;
+    const handelFetch = async serchValue => {
+      try {
+        setIsLoaderVisible(true);
+        const { data } = await axios.get(
+          `${BASE_URL}?key=${API_KEY}&per_page=15&page=${page}&q=${serchValue}&image_type=photo&pretty=true`
+        );
+        console.log(data);
+        setGallary(prevState => [...prevState, ...data.hits]);
+        setTotalFind(prevState => prevState + data.hits.length);
+        setTotalHits(data.totalHits);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoaderVisible(false);
+      }
+    };
+    if (!firsRender.current) {
+      handelFetch(search);
+
       return;
     }
-    console.log('second render ', gallary);
-    handelFetch(search);
+    firsRender.current = false;
   }, [search, page]);
-
-  const handelFetch = async serchValue => {
-    try {
-      setIsLoaderVisible(true);
-      const { data } = await axios.get(
-        `${BASE_URL}?key=${API_KEY}&per_page=15&page=${page}&q=${serchValue}&image_type=photo&pretty=true`
-      );
-      console.log(data);
-      setGallary(prevState => [...prevState, ...data.hits]);
-      setTotalFind(prevState => prevState + data.hits.length);
-      setTotalHits(data.totalHits);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoaderVisible(false);
-    }
-  };
 
   const handeLoadMore = () => {
     setPage(prevState => prevState + 1);

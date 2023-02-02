@@ -6,19 +6,19 @@ const modalRoot = document.querySelector('#modal-root');
 
 export const Modal = ({ closeModal, modalImage, altPhotos }) => {
   useEffect(() => {
+    const hendelClosemodalByEscape = e => {
+      console.log('escape');
+      if (e.code === 'Escape') {
+        closeModal();
+      }
+    };
     window.addEventListener('keydown', hendelClosemodalByEscape);
     return () => {
       window.removeEventListener('keydown', hendelClosemodalByEscape);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    };
+  }, [closeModal]);
 
-  const hendelClosemodalByEscape = e => {
-    console.log('escape');
-    if (e.code === 'Escape') {
-      closeModal();
-    }
-  };
+
 
   return createPortal(
     <div
